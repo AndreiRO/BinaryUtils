@@ -12,11 +12,11 @@ a binary files ad outputs them n text mode to
 stdout.
 
 Modifiers:
-%d -> an integer
-%c ->  a character
-%f -> a float
-%s ->  a string
-%b -> a boolean value(in the form true/false)
+*%d -> an integer
+*%c ->  a character
+*%f -> a float
+*%s ->  a string
+*%b -> a boolean value(in the form true/false)
 
 The string written also contains '\0'.
 Thu, whea reading, the size doesn't have
