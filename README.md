@@ -64,4 +64,4 @@ LICENSE
 =======
 
 Use it however you like, modify it in any way.
-If you imporved it make a PR.
+If you improved it make a PR.
