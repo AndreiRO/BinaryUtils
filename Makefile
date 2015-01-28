@@ -18,3 +18,6 @@ bl.o: binary_load.c
 
 clean:
 	rm -fv bd.o bl.o bl bd
+
+install: build
+	sudo mv bd bl /usr/local/bin

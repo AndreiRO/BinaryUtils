@@ -60,3 +60,8 @@ Implement mode for:
 	*signed/unsigned
 	*precision handling
 
+LICENCE
+=======
+
+Use it however you like, modify it in any way.
+If you imporved it make a PR.
