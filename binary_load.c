@@ -74,7 +74,7 @@ int main(int argc, char *argv[]) {
 			} 
 			
 			if(!(fp = fopen(argv[i + 1], "rb"))) {
-				fprintf(stderr, "Unable to open file: %s", argv[i + 1]);
+				fprintf(stderr, "Unable to open file: %s\n", argv[i + 1]);
 				return ERROR_IO;
 			}
 			flag = 1;
