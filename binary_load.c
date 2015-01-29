@@ -8,7 +8,7 @@
 #include<stdlib.h>
 #include<string.h>
 
-#define USAGE "Default usage: %s [-f file] [-s separator] modif1 modi2\n"
+#define USAGE "Default usage: %s [-f file] [-s separator] [-l] modif1 modi2\n"
 
 #define ERROR_PARAM -1
 #define ERROR_IO -2
@@ -33,6 +33,7 @@ char append(char **str, int *current, int *max, FILE *fp) {
 	
 	char c;
 	fread(&c, sizeof(char), 1, fp);	
+	
 	*(*str + *current) = c;
 	++ (*current);
 
@@ -55,6 +56,7 @@ int main(int argc, char *argv[]) {
 	FILE *fp = NULL;
 	int i;
 	char flag = 0;
+	char loop = 0;
 	char separator[DEFAULT_SIZE];
 	strcpy(separator, " ");
 
@@ -87,34 +89,45 @@ int main(int argc, char *argv[]) {
 			}
 			++ i;
 			strcpy(separator, argv[i]);
-		}
+		} else if(strcmp(argv[i], "-l") == 0) {
+			loop = 1;
+		} 
 	}
 
 	if(!flag) {
 		fp = stdin;
 	}
 
+start:
 	for(i = 1; i < argc; ++ i) {
+
 		if(strcmp(argv[i], "-f") == 0 || 
 			strcmp(argv[i], "-s") == 0) {
+
 			++ i; /* jump 1 step here and one in the for */
 			continue;
 		}
 
 		if(!strcmp(argv[i], "%d")) {
-			if(i == argc - 1) {
-				fprintf(
-					stderr, 
-					USAGE,
-					argv[0]
-				);
-			}
+
 			int rez;
 			fread(&rez, sizeof(int), 1, fp);
+
+			if(feof(fp)) {
+				goto finish;
+			}
+
 			printf("%d%s", rez, separator);
+
 		} else if(!strcmp(argv[i], "%f")) {
+
 			float rez;
 			fread(&rez, sizeof(float), 1, fp);
+
+			if(feof(fp)) {
+				goto finish;
+			}
+
 			printf("%f%s", rez, separator);
 
 
@@ -122,8 +135,10 @@ int main(int argc, char *argv[]) {
 			char *str = NULL;
 			int current, max;
 			str = (char*)malloc(DEFAULT_SIZE * sizeof(char));
+
 			if(!str) {
 				fprintf(stderr, "Out of mmory...\n");
+
 				if(fp != stdin) {
 					fclose(fp);
 				}
@@ -133,6 +148,13 @@ int main(int argc, char *argv[]) {
 
 			max = DEFAULT_SIZE;
 			current = 0;
+			append(&str, &current, &max, fp);
+
+			if(feof(fp)) {
+				free(str);
+				goto finish;
+			}
+
 			while(append(&str, &current, &max, fp) != '\0');
 
 			printf("%s%s", str, separator);
@@ -141,11 +163,20 @@ int main(int argc, char *argv[]) {
 		} else if(!strcmp(argv[i], "%c")) {
 			char c;
 			fread(&c, sizeof(char), 1, fp);
+
+			if(feof(fp)) {
+				goto finish;
+			}
+
 			printf("%c%s", c, separator);
 
 		} else if(!strcmp(argv[i], "%b")) {
 			char b;
 			fread(&b, sizeof(char), 1, fp);
+
+			if(feof(fp)) {
+				goto finish;
+			}
 
 			if(b == 0) {
 				printf("false%s", separator);
@@ -156,6 +187,12 @@ int main(int argc, char *argv[]) {
 	
 	}
 
+	if(loop) {
+		printf("\n");
+		goto start;
+	}
+
+finish:
 	if(fp != stdin) {
 		fclose(fp);
 	}

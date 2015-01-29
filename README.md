@@ -33,7 +33,7 @@ to /usr/local/bin
 
 ### BinaryDump
 
-`bd -f test.bin %s some_string %d 123 %f 3.14156 %b true %b false`
+`bd [-l] -f test.bin %s some_string %d 123 %f 3.14156 %b true %b false`
 
 Where some_string musn't contain spaces. If it does contain,
 escape it using "some_string".
@@ -49,6 +49,8 @@ escape it using "some_string". Noice, if the separator is '\t' or
 
 ##Notice
 If -f isn't given, stdout/stdin is used instead.
+-l is for loop mode. That means that it will read
+data in that format untill the end of the file is reached.
 
 Further work
 ============
