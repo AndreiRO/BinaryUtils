@@ -131,6 +131,54 @@ start:
 			printf("%f%s", rez, separator);
 
 
+		} else if(!strcmp(argv[i], "%lf")) {
+
+			double rez;
+			fread(&rez, sizeof(double), 1, fp);
+
+			if(feof(fp)) {
+				goto finish;
+			}
+
+			printf("%lf%s", rez, separator);
+
+
+		} else if(!strcmp(argv[i], "%ld")) {
+
+			long rez;
+			fread(&rez, sizeof(long), 1, fp);
+
+			if(feof(fp)) {
+				goto finish;
+			}
+
+			printf("%ld%s", rez, separator);
+
+
+		} else if(!strcmp(argv[i], "%Lf")) {
+
+			long double rez;
+			fread(&rez, sizeof(long double), 1, fp);
+
+			if(feof(fp)) {
+				goto finish;
+			}
+
+			printf("%Lf%s", rez, separator);
+
+
+		} else if(!strcmp(argv[i], "%Ld")) {
+
+			long long rez;
+			fread(&rez, sizeof(long long), 1, fp);
+
+			if(feof(fp)) {
+				goto finish;
+			}
+
+			printf("%Ld%s", rez, separator);
+
+
 		} else if(!strcmp(argv[i], "%s")) {
 			char *str = NULL;
 			int current, max;

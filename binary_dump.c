@@ -128,6 +128,55 @@ int main(int argc, char *argv[]) {
 			}
 			fwrite(&b, sizeof(char), 1, fp);
 
+		} else if(!strcmp(argv[i], "%lf")) {
+			if(i == argc - 1) {
+				fprintf(
+					stderr, 
+					USAGE,
+					argv[0]
+				);
+			}
+			++ i;
+			double rez = atof(argv[i]);
+			fwrite(&rez, sizeof(double), 1, fp);
+
+
+		} else if(!strcmp(argv[i], "%ld")) {
+			if(i == argc - 1) {
+				fprintf(
+					stderr, 
+					USAGE,
+					argv[0]
+				);
+			}
+			++ i;
+			long rez = atof(argv[i]);
+			fwrite(&rez, sizeof(long), 1, fp);
+
+		} else if(!strcmp(argv[i], "%Ld")) {
+			if(i == argc - 1) {
+				fprintf(
+					stderr, 
+					USAGE,
+					argv[0]
+				);
+			}
+			++ i;
+			long long rez = atoll(argv[i]);
+			fwrite(&rez, sizeof(long long), 1, fp);
+
+		} else if(!strcmp(argv[i], "%Lf")) {
+			if(i == argc - 1) {
+				fprintf(
+					stderr, 
+					USAGE,
+					argv[0]
+				);
+			}
+			++ i;
+			long double rez = strtold(argv[i], NULL);
+			fwrite(&rez, sizeof(long double), 1, fp);
+
 		} else {
 			fwrite(argv[i], sizeof(char), strlen(argv[i]) + 1, fp);
 		}

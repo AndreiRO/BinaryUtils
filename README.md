@@ -17,6 +17,10 @@ Modifiers:
 * %f -> a float
 * %s ->  a string
 * %b -> a boolean value(in the form true/false)
+* %lf -> double
+* %ld -> long
+* %Lf -> long double
+* %Ld -> long long
 
 The string written also contains '\0'.
 Thu, whea reading, the size doesn't have
@@ -56,8 +60,6 @@ Further work
 ============
 
 Implement mode for:
-	* long
-	* double
 	* short
 	* signed/unsigned
 	* precision handling
