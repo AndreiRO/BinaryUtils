@@ -14,6 +14,7 @@ stdout.
 Modifiers:
 * %d -> an integer
 * %c ->  a character
+* %h ->  a short (16bit)
 * %f -> a float
 * %s ->  a string
 * %b -> a boolean value(in the form true/false)
@@ -31,20 +32,20 @@ Tutorial
 
 ###First compile them.
 
-`andrei@pc-$: make`
-`andrei@pc-$: make install` to instal them
+`andrei@pc-$: make
+andrei@pc-$: make install` to instal them
 to /usr/local/bin
 
 ### BinaryDump
 
-`bd [-l] -f test.bin %s some_string %d 123 %f 3.14156 %b true %b false`
+`bd -f test.bin %s some_string %d 123 %f 3.14156 %b true %b false`
 
 Where some_string musn't contain spaces. If it does contain,
 escape it using "some_string".
 
 ### BinaryLoad
 
-`bl -f test.bin -s ' ' %s %d %f %b %b`
+`bl [-l]  -f test.bin -s ' ' %s %d %f %b %b`
 
 Where some_string musn't contain spaces. If it does contain,
 escape it using "some_string". Noice, if the separator is '\t' or

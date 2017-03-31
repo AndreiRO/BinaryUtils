@@ -30,10 +30,10 @@ char append(char **str, int *current, int *max, FILE *fp) {
 		}
 		*str = temp;
 	}
-	
+
 	char c;
-	fread(&c, sizeof(char), 1, fp);	
-	
+	fread(&c, sizeof(char), 1, fp);
+
 	*(*str + *current) = c;
 	++ (*current);
 
@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
 
 	if(argc < 2) {
 		fprintf(
-			stderr, 
+			stderr,
 			USAGE,
 			argv[0]
 		);
@@ -65,14 +65,14 @@ int main(int argc, char *argv[]) {
 		if(strcmp(argv[i], "-f") == 0) {
 			if(i == argc - 1) {
 				fprintf(
-					stderr, 
+					stderr,
 					USAGE,
 					argv[0]
 				);
 				return ERROR_PARAM;
 
-			} 
-			
+			}
+
 			if(!(fp = fopen(argv[i + 1], "rb"))) {
 				fprintf(stderr, "Unable to open file: %s\n", argv[i + 1]);
 				return ERROR_IO;
@@ -81,9 +81,9 @@ int main(int argc, char *argv[]) {
 		} else if(strcmp(argv[i], "-s") == 0) {
 			if(i == argc - 1) {
 				fprintf(
-					stderr, 
+					stderr,
 					USAGE,
-					argv[0]	
+					argv[0]
 				);
 				return ERROR_PARAM;
 			}
@@ -91,7 +91,7 @@ int main(int argc, char *argv[]) {
 			strcpy(separator, argv[i]);
 		} else if(strcmp(argv[i], "-l") == 0) {
 			loop = 1;
-		} 
+		}
 	}
 
 	if(!flag) {
@@ -101,7 +101,7 @@ int main(int argc, char *argv[]) {
 start:
 	for(i = 1; i < argc; ++ i) {
 
-		if(strcmp(argv[i], "-f") == 0 || 
+		if(strcmp(argv[i], "-f") == 0 ||
 			strcmp(argv[i], "-s") == 0) {
 
 			++ i; /* jump 1 step here and one in the for */
@@ -119,7 +119,18 @@ start:
 
 			printf("%d%s", rez, separator);
 
-		} else if(!strcmp(argv[i], "%f")) {
+		} else if (!strcmp(argv[i], "%h")) {
+			short rez;
+			fread(&rez, sizeof(short), 1, fp);
+
+			if(feof(fp)) {
+				goto finish;
+			}
+
+			printf("%d%s", (int)rez, separator);
+
+		}
+		else if(!strcmp(argv[i], "%f")) {
 
 			float rez;
 			fread(&rez, sizeof(float), 1, fp);
@@ -230,9 +241,9 @@ start:
 				printf("false%s", separator);
 			} else if(b == 1) {
 				printf("true%s", separator);
-			}		
+			}
 		}
-	
+
 	}
 
 	if(loop) {
@@ -248,4 +259,3 @@ finish:
 	printf("\n");
 	return 0;
 }
-

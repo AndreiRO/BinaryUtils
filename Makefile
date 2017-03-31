@@ -1,6 +1,6 @@
 .PHONY: build clean
 CC = gcc
-CFLAGS = -Wall -Werror -Os
+CFLAGS = -Wall -Os
 
 build: bd bl
 
